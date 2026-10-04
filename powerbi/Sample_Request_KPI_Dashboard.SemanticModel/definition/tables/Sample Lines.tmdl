@@ -1,0 +1,56 @@
+table 'Sample Lines'
+	lineageTag: f72b594f-ca26-4e54-80b1-9b39bd9e29b1
+
+	column 'Line GUID'
+		dataType: string
+		isHidden
+		lineageTag: eedab035-ae3f-423b-a522-a03e4246b02b
+		summarizeBy: none
+		sourceColumn: Line GUID
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Line Name'
+		dataType: string
+		lineageTag: 916c1d1c-1c72-4434-8173-4bdcec1054cf
+		summarizeBy: none
+		sourceColumn: Sample Line
+
+		annotation SummarizationSetBy = Automatic
+
+	column Supervisor
+		dataType: string
+		lineageTag: c1d7ef93-a2d9-49f4-9448-10911c03c601
+		summarizeBy: none
+		sourceColumn: Supervisor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Weekly Capacity'
+		dataType: int64
+		formatString: 0
+		lineageTag: e1a883c6-ef95-47f9-9e11-86affa920b43
+		summarizeBy: sum
+		sourceColumn: Weekly Capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Sample Lines' = m
+		mode: import
+		source =
+				let
+				    Source = CommonDataService.Database("org8af0f0ea.crm5.dynamics.com"),
+				    dbo_cr66a_sampleline = Source{[Schema="dbo",Item="cr66a_sampleline"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(dbo_cr66a_sampleline,{"cr66a_samplelineid", "cr66a_linename", "cr66a_supervisor", "cr66a_weeklycapacity"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"cr66a_samplelineid", "Line GUID"}, {"cr66a_linename", "Sample Line"}, {"cr66a_supervisor", "Supervisor"}, {"cr66a_weeklycapacity", "Weekly Capacity"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

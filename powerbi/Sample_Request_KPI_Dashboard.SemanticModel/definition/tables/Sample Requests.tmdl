@@ -1,0 +1,203 @@
+table 'Sample Requests'
+	lineageTag: a194aa65-b8e0-425d-aad4-5dec6d8cd9a8
+
+	column 'Request GUID'
+		dataType: string
+		isHidden
+		lineageTag: 34805416-ff9d-4f90-bc40-5815932a9215
+		summarizeBy: none
+		sourceColumn: Request GUID
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Request ID'
+		dataType: string
+		lineageTag: 0812ebfd-fd1d-4f06-bea7-a68d43a0c2cb
+		summarizeBy: none
+		sourceColumn: Request ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 2c78407f-12c0-4ae2-813e-817c7f229b2a
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Requested Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 93ab6ba4-623d-425f-8222-4542e2a1198d
+		summarizeBy: none
+		sourceColumn: Requested Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Assigned Merchandiser'
+		dataType: string
+		lineageTag: bce1a4ef-0d28-4fd2-9102-124225c70117
+		summarizeBy: none
+		sourceColumn: Merchandiser
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Style GUID'
+		dataType: string
+		isHidden
+		lineageTag: 33f04187-b592-46a5-8794-faaf78b20fc6
+		summarizeBy: none
+		sourceColumn: Style GUID
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Brand GUID'
+		dataType: string
+		isHidden
+		lineageTag: cec658c3-cad5-404e-9685-33a68cee4f5f
+		summarizeBy: none
+		sourceColumn: Brand GUID
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Line GUID'
+		dataType: string
+		isHidden
+		lineageTag: 7cfba1e4-b22a-48cc-ae10-17806d1b6cd2
+		summarizeBy: none
+		sourceColumn: Line GUID
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sample Type'
+		dataType: string
+		lineageTag: c6367287-1f51-4e6c-ad91-630abc04d97b
+		summarizeBy: none
+		sourceColumn: Sample Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Priority
+		dataType: string
+		lineageTag: 7bb1e8fe-deac-4f71-b5ed-1aae206a5a95
+		summarizeBy: none
+		sourceColumn: Priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Request Status'
+		dataType: string
+		lineageTag: eb8a2ec7-9192-43f0-979b-2d5661d8f76d
+		summarizeBy: none
+		sourceColumn: Request Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rework
+		dataType: string
+		lineageTag: 6345f6ee-474d-4bcc-8ab6-f855d44e8362
+		summarizeBy: none
+		sourceColumn: Rework
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Required Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b43b989e-799e-4e8a-80bf-f9d099a55bdf
+		summarizeBy: none
+		sourceColumn: Required Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Completed Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 97ba0050-21eb-4955-bb50-5f605c0e8466
+		summarizeBy: none
+		sourceColumn: Completed Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Lead Time Days'
+		dataType: int64
+		formatString: 0
+		lineageTag: ff7cf1e3-29de-4862-9568-f590e8661836
+		summarizeBy: sum
+		sourceColumn: Lead Time Days
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is On Time'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 588a9505-2e54-4d42-80e4-0d0e45d4604a
+		summarizeBy: none
+		sourceColumn: Is On Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Days Late'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8023e548-eae6-45ff-98a6-deecef629d4e
+		summarizeBy: sum
+		sourceColumn: Days Late
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Open'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c12bb89d-b642-4997-bee2-33ba2e39cea5
+		summarizeBy: none
+		sourceColumn: Is Open
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Sample Requests' = m
+		mode: import
+		source =
+				let
+				    Source = CommonDataService.Database("org8af0f0ea.crm5.dynamics.com"),
+				    dbo_cr66a_samplerequest = Source{[Schema="dbo",Item="cr66a_samplerequest"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(dbo_cr66a_samplerequest,{"cr66a_samplerequestid", "cr66a_requestid", "cr66a_quantity", "cr66a_requesteddaterequireddatecompleteddate", "cr66a_assignedmerchandiser", "cr66a_style", "cr66a_brand", "cr66a_sampleline", "cr66a_sampletypename", "cr66a_priorityname", "cr66a_requeststatusname", "cr66a_reworkname", "cr66a_requireddate", "cr66a_completeddate"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"cr66a_samplerequestid", "Request GUID"}, {"cr66a_requestid", "Request ID"}, {"cr66a_quantity", "Quantity"}, {"cr66a_requesteddaterequireddatecompleteddate", "Requested Date"}, {"cr66a_assignedmerchandiser", "Merchandiser"}, {"cr66a_style", "Style GUID"}, {"cr66a_brand", "Brand GUID"}, {"cr66a_sampleline", "Line GUID"}, {"cr66a_sampletypename", "Sample Type"}, {"cr66a_priorityname", "Priority"}, {"cr66a_requeststatusname", "Request Status"}, {"cr66a_reworkname", "Rework"}, {"cr66a_requireddate", "Required Date"}, {"cr66a_completeddate", "Completed Date"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"Request GUID", "Request ID", "Quantity", "Merchandiser", "Style GUID", "Brand GUID", "Line GUID", "Sample Type", "Priority", "Request Status", "Rework", "Requested Date", "Required Date", "Completed Date"}),
+				    Custom1 = Table.TransformColumns(#"Renamed Columns", {{"Requested Date", each if _ = null then null else DateTime.Date(_ + #duration(0,5,30,0)), type date}, {"Required Date", each if _ = null then null else DateTime.Date(_ + #duration(0,5,30,0)), type date}, {"Completed Date", each if _ = null then null else DateTime.Date(_ + #duration(0,5,30,0)), type date}}),
+				    #"Added Custom" = Table.AddColumn(Custom1, "Lead Time Days", each if [Completed Date] = null then null else Duration.Days([Completed Date] - [Requested Date])),
+				    #"Added Custom1" = Table.AddColumn(#"Added Custom", "Is On Time", each if [Completed Date] = null then null else [Completed Date] <= [Required Date]),
+				    #"Added Custom2" = Table.AddColumn(#"Added Custom1", "Days Late", each if [Completed Date] = null then null else List.Max({0, Duration.Days([Completed Date] - [Required Date])})),
+				    #"Added Custom3" = Table.AddColumn(#"Added Custom2", "Is Open", each [Request Status] <> "Completed"),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom3",{{"Days Late", Int64.Type}, {"Lead Time Days", Int64.Type}, {"Is Open", type logical}, {"Is On Time", type logical}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

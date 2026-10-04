@@ -1,0 +1,91 @@
+table Date
+	lineageTag: 833d4c3e-1ff1-4f11-bc45-036b9b1b05e2
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: General Date
+		lineageTag: 6e488a25-0c77-45c5-a79e-c04d9edaf225
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: 835c662a-1964-441e-80e3-91f115d1b175
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month No'
+		formatString: 0
+		lineageTag: f15fcf1e-3a05-472b-8445-e6f9bc91680f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		lineageTag: 98c22171-18ae-4e17-b1fd-884832469a71
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year-Month
+		lineageTag: 0594a835-0e75-4ced-af38-9d8a730f173e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year-Month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		lineageTag: 6cffb4ec-9a78-48c8-87e6-d2f4379c91c8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week No'
+		formatString: 0
+		lineageTag: a07751d3-6e55-4759-941f-79efea506e6d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Week No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Week'
+		formatString: 0
+		lineageTag: 1107f4c8-4847-4324-9376-3b35bff48f78
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Week]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = calculated
+		mode: import
+		source =
+				
+				ADDCOLUMNS(
+				    CALENDAR(DATE(2024,10,1), DATE(2026,12,31)),
+				    "Year", YEAR([Date]),
+				    "Month No", MONTH([Date]),
+				    "Month", FORMAT([Date], "MMM"),
+				    "Year-Month", FORMAT([Date], "YYYY-MM"),
+				    "Quarter", "Q" & QUARTER([Date]),
+				    "Week No", WEEKNUM([Date], 2),
+				    "Year Week", YEAR([Date]) * 100 + WEEKNUM([Date], 2)
+				)
+
+	annotation PBI_Id = 78120c53f4674775a92379fa8f36dd5d
+

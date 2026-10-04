@@ -1,0 +1,179 @@
+table _Measures
+	lineageTag: 9af98c8f-fd23-4ef9-ba02-b6e087b604da
+
+	measure 'Total Requests' = COUNTROWS('Sample Requests')
+		formatString: #,0
+		lineageTag: 5e4ae6af-132b-4e6f-9778-22084aac9a4c
+
+	measure 'Completed Requests' =
+			
+			CALCULATE([Total Requests], 'Sample Requests'[Request Status] = "Completed")
+		formatString: #,0
+		lineageTag: 8b3aa37d-ef90-4419-9b0e-7e94b4c1cc1a
+
+	measure 'On-Time Requests' =
+			
+			CALCULATE([Total Requests], 'Sample Requests'[Is On Time] = TRUE())
+		formatString: #,0
+		lineageTag: 7d72ae4f-c027-47ac-9717-a270806c6080
+
+	measure 'On-Time %' = DIVIDE([On-Time Requests], [Completed Requests])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 7dcea393-6881-434c-8a06-e1aa72f9b54c
+
+	measure 'Avg Lead Time' = AVERAGE('Sample Requests'[Lead Time Days])
+		formatString: 0.0
+		lineageTag: 0660674c-c2ba-43f0-9f82-22d1a42b016b
+
+	measure 'Rework Rate' =
+			
+			DIVIDE(
+			    CALCULATE([Total Requests], 'Sample Requests'[Rework] = "Yes"),
+			    [Total Requests]
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 22b9d8ee-33a9-4b14-b8d5-1935d5ab5449
+
+	measure 'On-Time Target' = 0.9
+		lineageTag: 42d8a761-71cd-4f26-bc40-bcea338227d5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'On-Time vs Target' = [On-Time %] - [On-Time Target]
+		lineageTag: 27b2f8ad-50df-458e-acf7-d893875fd8a6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Open Requests' =
+			
+			CALCULATE([Total Requests], 'Sample Requests'[Is Open] = TRUE(), REMOVEFILTERS('Date'))
+		formatString: #,0
+		lineageTag: 22b7a443-7e02-43f3-87fe-6f1457b5503e
+
+	measure 'Overdue Open' =
+			
+			CALCULATE(
+			    [Total Requests],
+			    'Sample Requests'[Is Open] = TRUE(),
+			    'Sample Requests'[Required Date] < TODAY(),
+			    REMOVEFILTERS('Date')
+			)
+		formatString: #,0
+		lineageTag: 7adf8ecd-ff46-4906-8fd6-a5008ef944d2
+
+	measure 'Avg Days Overdue' =
+			
+			AVERAGEX(
+			    FILTER(
+			        CALCULATETABLE('Sample Requests', REMOVEFILTERS('Date')),
+			        'Sample Requests'[Is Open] && 'Sample Requests'[Required Date] < TODAY()
+			    ),
+			    DATEDIFF('Sample Requests'[Required Date], TODAY(), DAY)
+			)
+		formatString: 0.0
+		lineageTag: 26a25646-6d25-47f3-a48e-db9a0050224f
+
+	measure 'Requests LY' =
+			
+			CALCULATE([Total Requests], SAMEPERIODLASTYEAR('Date'[Date]))
+		formatString: #,0
+		lineageTag: 931f635d-e795-4a23-98a0-a4caa4fcd8e1
+
+	measure 'Requests YoY %' = DIVIDE([Total Requests] - [Requests LY], [Requests LY])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: acfbdb1c-78b5-417b-ac92-7f2ba38c6303
+
+	measure 'On-Time % LY' =
+			
+			CALCULATE([On-Time %], SAMEPERIODLASTYEAR('Date'[Date]))
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 7d61c85d-6e6f-4d99-9c80-dafca6adbdca
+
+	measure 'Requests Due' =
+			
+			CALCULATE(
+			    [Total Requests],
+			    USERELATIONSHIP('Sample Requests'[Required Date], 'Date'[Date])
+			)
+		formatString: #,0
+		lineageTag: c1cede52-9c47-4113-9ebf-5b8187ac2f6c
+
+	measure 'Requests Completed in Period' =
+			
+			CALCULATE(
+			    [Total Requests],
+			    USERELATIONSHIP('Sample Requests'[Completed Date], 'Date'[Date])
+			)
+		formatString: #,0
+		lineageTag: 2f8a4411-b508-41fe-b70e-0b92e6fbfd6b
+
+	measure 'On-Time % (by Completion Date)' =
+			
+			CALCULATE(
+			    [On-Time %],
+			    USERELATIONSHIP('Sample Requests'[Completed Date], 'Date'[Date])
+			)
+		lineageTag: b6481ed6-c616-4bb3-8207-bc11ed01b27b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Pieces = SUM('Sample Requests'[Quantity])
+		formatString: #,0
+		lineageTag: 1c738347-4ff9-4fc7-b879-4dd42cfa0edc
+
+	measure 'Weeks in Period' = DISTINCTCOUNT('Date'[Year Week])
+		formatString: #,0
+		lineageTag: 41a68b05-b545-4428-bb56-3ea9a56fe0fc
+
+	measure 'Capacity Pieces' = SUM('Sample Lines'[Weekly Capacity]) * [Weeks in Period]
+		formatString: #,0
+		lineageTag: 8bd4a2ae-ce31-40ed-bfe0-d06285ee6b82
+
+	measure 'Capacity Util %' = DIVIDE([Pieces], [Capacity Pieces])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 6a540185-2d37-46b2-aef6-9644dbe6a9f2
+
+	measure 'Status Changes' = COUNTROWS('Status History')
+		formatString: #,0
+		lineageTag: cb061bad-4d68-407a-9a8c-e4dcfe3da7fd
+
+	measure 'Rework Loops' =
+			
+			CALCULATE(COUNTROWS('Status History'), 'Status History'[New Status] = "Rework")
+		formatString: #,0
+		lineageTag: 09945e3c-806c-42c1-9acb-594b54984550
+
+	measure 'On-Time Color' =
+			
+			IF([On-Time %] >= [On-Time Target], "#2a78d6", "#eb6834")
+		lineageTag: f0a981b7-edd9-4a31-80b6-b18a17b51ed5
+
+	measure 'Overdue Flag Icon' =
+			
+			IF([Overdue Open] > 0, "●", "")
+		lineageTag: 9baa23d0-6821-4231-b610-60ec8e005fa7
+
+	measure 'Days Overdue' =
+			
+			VAR req = SELECTEDVALUE('Sample Requests'[Required Date])
+			RETURN
+			IF(
+			    NOT ISBLANK(req) && req < TODAY(),
+			    DATEDIFF(req, TODAY(), DAY),
+			    0
+			)
+		formatString: 0
+		lineageTag: cba2fe3e-f6e2-4c1d-bd17-9f1607d9a696
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

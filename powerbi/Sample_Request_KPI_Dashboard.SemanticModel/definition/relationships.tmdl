@@ -1,0 +1,48 @@
+relationship dbb935e9-96ab-430b-90c9-0044a3a28dd1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Status History'.'Created On'
+	toColumn: LocalDateTable_609641bb-1dcf-4702-8643-ec76d860b30a.Date
+
+relationship 667f5154-5884-4d27-a9c7-5c229181dbd3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Status History'.'Changed On'
+	toColumn: LocalDateTable_af31959c-fe25-46c3-acd9-1392523c6253.Date
+
+relationship fc8156c7-a207-4b58-8888-d936be0661db
+	fromColumn: 'Sample Requests'.'Brand GUID'
+	toColumn: Brands.'Brand GUID'
+
+	annotation PBI_IsFromSource = FS
+
+relationship 40531459-3ba7-4786-b0f1-0fe034a7a074
+	fromColumn: 'Sample Requests'.'Line GUID'
+	toColumn: 'Sample Lines'.'Line GUID'
+
+	annotation PBI_IsFromSource = FS
+
+relationship f20668aa-a098-4b64-95ef-5c24a4c369b3
+	fromColumn: 'Sample Requests'.'Style GUID'
+	toColumn: Styles.'Style GUID'
+
+	annotation PBI_IsFromSource = FS
+
+relationship 2736abda-ddde-423d-884b-033941654fa3
+	fromColumn: 'Status History'.'Request GUID'
+	toColumn: 'Sample Requests'.'Request GUID'
+
+	annotation PBI_IsFromSource = FS
+
+relationship 232f57b4-8d31-f215-4a7f-f0854f2bb734
+	fromColumn: 'Sample Requests'.'Requested Date'
+	toColumn: Date.Date
+
+relationship 1c851ac6-2760-ea12-9958-33b5d2731146
+	isActive: false
+	fromColumn: 'Sample Requests'.'Required Date'
+	toColumn: Date.Date
+
+relationship 17d56524-fb35-6f54-1795-6bac88b4de6d
+	isActive: false
+	fromColumn: 'Sample Requests'.'Completed Date'
+	toColumn: Date.Date
+

@@ -1,0 +1,58 @@
+table Brands
+	lineageTag: f346c5b6-684f-4fdc-9d5b-2b8404f123aa
+
+	column 'Brand GUID'
+		dataType: string
+		isHidden
+		lineageTag: b6b70905-2f16-46df-9e2d-2f1184be3cb9
+		summarizeBy: none
+		sourceColumn: Brand GUID
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Brand Name'
+		dataType: string
+		lineageTag: 9a4ce091-8388-46b5-be36-123106fe4250
+		summarizeBy: none
+		sourceColumn: Brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 7b827a1b-069d-42c5-9927-1b081a91374e
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Brand Tier'
+		dataType: string
+		lineageTag: c89df436-5fcc-4042-8020-202e70b53a40
+		summarizeBy: none
+		sourceColumn: Brand Tier
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Brands = m
+		mode: import
+		source =
+				let
+				    Source = CommonDataService.Database("org8af0f0ea.crm5.dynamics.com"),
+				    dbo_cr66a_brand = Source{[Schema="dbo",Item="cr66a_brand"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(dbo_cr66a_brand,{"cr66a_brandid", "cr66a_brandname", "cr66a_region", "cr66a_brandtier", "cr66a_brandtiername"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Removed Other Columns",{"cr66a_brandtiername"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Columns", "Brand Tier", each try {"Premium", "Mid-Market", "Value"}{[cr66a_brandtier] - 904450000} otherwise null),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Custom",{"cr66a_brandtier"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns1",{{"cr66a_brandid", "Brand GUID"}, {"cr66a_brandname", "Brand"}, {"cr66a_region", "Region"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

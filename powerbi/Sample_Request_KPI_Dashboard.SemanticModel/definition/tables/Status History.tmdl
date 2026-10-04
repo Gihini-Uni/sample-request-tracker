@@ -1,0 +1,88 @@
+table 'Status History'
+	lineageTag: 44f4d8ac-9f2f-4a97-b431-ec899de9376b
+
+	column 'Created On'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ef9de485-d0b4-4db7-9af2-db2bd6daf331
+		summarizeBy: none
+		sourceColumn: Created On
+
+		variation Variation
+			isDefault
+			relationship: dbb935e9-96ab-430b-90c9-0044a3a28dd1
+			defaultHierarchy: LocalDateTable_609641bb-1dcf-4702-8643-ec76d860b30a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Request GUID'
+		dataType: string
+		isHidden
+		lineageTag: 0a3301cb-d28b-455c-8481-555e0a74e8da
+		summarizeBy: none
+		sourceColumn: Request GUID
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Old Status'
+		dataType: string
+		lineageTag: 026dc2dd-716e-4152-98fc-b9fcb8ed5306
+		summarizeBy: none
+		sourceColumn: Old Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'New Status'
+		dataType: string
+		lineageTag: cfcceb15-02d8-436c-8cd0-2bd5dd561d9c
+		summarizeBy: none
+		sourceColumn: New Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Changed On'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 092a814c-b684-461b-bfd0-b352dd627a13
+		summarizeBy: none
+		sourceColumn: Changed On
+
+		variation Variation
+			isDefault
+			relationship: 667f5154-5884-4d27-a9c7-5c229181dbd3
+			defaultHierarchy: LocalDateTable_af31959c-fe25-46c3-acd9-1392523c6253.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Changed By'
+		dataType: string
+		lineageTag: 76d95798-b642-4ed9-bcc7-672e89217c47
+		summarizeBy: none
+		sourceColumn: Changed By
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Status History' = m
+		mode: import
+		source =
+				let
+				    Source = CommonDataService.Database("org8af0f0ea.crm5.dynamics.com"),
+				    dbo_cr66a_statushistory = Source{[Schema="dbo",Item="cr66a_statushistory"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(dbo_cr66a_statushistory,{"createdon", "cr66a_request", "cr66a_oldstatusname", "cr66a_newstatusname", "cr66a_changedon", "cr66a_changedby"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"createdon", "Created On"}, {"cr66a_request", "Request GUID"}, {"cr66a_oldstatusname", "Old Status"}, {"cr66a_newstatusname", "New Status"}, {"cr66a_changedon", "Changed On"}, {"cr66a_changedby", "Changed By"}}),
+				    Custom1 = Table.TransformColumns(#"Renamed Columns", {{"Created On", each if _ = null then null else DateTime.Date(_ + #duration(0,5,30,0)), type date}, {"Changed On", each if _ = null then null else DateTime.Date(_ + #duration(0,5,30,0)), type date}})
+				in
+				    Custom1
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

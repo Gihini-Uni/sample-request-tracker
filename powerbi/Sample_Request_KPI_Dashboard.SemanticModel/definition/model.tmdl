@@ -1,0 +1,28 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Sample Requests","Status History","Brands","Sample Lines","Styles","_Measures"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'Sample Requests'
+ref table DateTableTemplate_3101ace0-9275-47d8-b0f1-94c979fc04c0
+ref table 'Status History'
+ref table LocalDateTable_609641bb-1dcf-4702-8643-ec76d860b30a
+ref table LocalDateTable_af31959c-fe25-46c3-acd9-1392523c6253
+ref table Brands
+ref table 'Sample Lines'
+ref table Styles
+ref table Date
+ref table _Measures
+
+ref cultureInfo en-US
+

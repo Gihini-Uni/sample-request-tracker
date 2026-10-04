@@ -1,0 +1,55 @@
+table Styles
+	lineageTag: 860678c5-05bf-4215-b97f-745efc127dec
+
+	column 'Style GUID'
+		dataType: string
+		isHidden
+		lineageTag: 8705fbb4-a6b0-4d38-85cb-e46903faa288
+		summarizeBy: none
+		sourceColumn: Style GUID
+
+		changedProperty = Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Style No'
+		dataType: string
+		lineageTag: a9989e60-2f47-4bc2-9a2e-56183f51952c
+		summarizeBy: none
+		sourceColumn: Style No
+
+		annotation SummarizationSetBy = Automatic
+
+	column Season
+		dataType: string
+		lineageTag: 911f5251-dc61-47a7-8bcb-873be5aa0ea4
+		summarizeBy: none
+		sourceColumn: Season
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 1823f79d-6205-48ee-9c8d-388e2f7d8951
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Styles = m
+		mode: import
+		source =
+				let
+				    Source = CommonDataService.Database("org8af0f0ea.crm5.dynamics.com"),
+				    dbo_cr66a_style = Source{[Schema="dbo",Item="cr66a_style"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(dbo_cr66a_style,{"cr66a_styleid", "cr66a_styleno", "cr66a_season", "cr66a_categoryname"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"cr66a_categoryname", "Category"}, {"cr66a_season", "Season"}, {"cr66a_styleid", "Style GUID"}, {"cr66a_styleno", "Style No"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
