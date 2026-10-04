@@ -167,45 +167,24 @@ Full list of measures: [`docs/dax-measures.md`](docs/dax-measures.md)
 ## 📸 Screenshots
 
 ### Requests List
-![Requests list](docs/New Request screen.png)
+![Requests list](docs/New_Request_screen.png)
 
 ### Request Form (auto-generated ID, default status)
-![Request form](docs/Create new request.png)
+![Request form](docs/Create_new_request.png)
 
 ### Planner View (stage-based buttons and days-late indicators)
-![Planner view](docs/Planner view.png)
+![Planner view](docs/Planner_view.png)
 
 ### Power Automate Flows
-![Cloud flows](docs/Automate flows.png)
+![Cloud flows](docs/Automate_flows.png)
 
 ### Automated Email – New Request Alert
-![New request email](docs/New sample request mail.png)
+![New request email](docs/New_sample_request_mail.png)
 
 ### Automated Email – Daily Overdue Summary
-![Daily overdue email](docs/screenshots/06_daily_overdue_email.png)
+![Daily overdue email](docs/Daily_overdue_sample_mail.png)
 
 
-
-## 📁 Repository Structure
-
-```
-sample-request-tracker/
-├── README.md
-├── solution/
-│   ├── SampleRequestTracker_1_0_0_0.zip   # Exported unmanaged Power Platform solution
-│   └── src/                               # (optional) unpacked solution source
-├── powerbi/
-│   └── Sample_Request_KPI_Dashboard.pbix
-├── data/
-│   ├── 1_Brands.csv
-│   ├── 2_SampleLines.csv
-│   ├── 3_Styles.csv
-│   ├── 4_SampleRequests.csv
-│   └── 5_StatusHistory.csv
-└── docs/
-    ├── dax-measures.md
-    └── screenshots/
-```
 
 ---
 
