@@ -2,8 +2,9 @@
 
 An end-to-end system for tracking garment **sample requests** — from the moment a merchandiser raises a request to sample completion — built with **Power Apps, Dataverse, Power Automate and Power BI**.
 
-🔗 **Live dashboard:** [View the Power BI report](PASTE-YOUR-PUBLISHED-LINK-HERE)
-🎥 **Demo video:** [Watch the 3-minute walkthrough](PASTE-YOUR-VIDEO-LINK-HERE)
+🔗 **Live dashboard:** [View the Power BI report]((https://app.powerbi.com/view?r=eyJrIjoiYTAzNzNhNzgtZTgxOS00MDU2LTllZjYtYTc2ZDZlMzU3M2MwIiwidCI6ImFhYzBjNTY0LTZjNWUtNGIwNS04ZGMzLTQwODA4N2Y3N2Y3NiIsImMiOjEwfQ%3D%3D))
+
+🔗 **View PowerApp:** [View the PowerApp created] (https://apps.powerapps.com/play/e/1cbe9ceb-8ab7-e05f-ae12-e060353a589d/a/013ba833-20b5-455d-99ad-5203ddff1355?tenantId=aac0c564-6c5e-4b05-8dc3-408087f77f76&hint=b6155a0d-eed6-4b60-a056-b4c171a7845f&source=sharebutton&sourcetime=1791149091777#)
 
 > ⚠️ All data in this project is **synthetic** and was generated for demonstration purposes. Brand names, styles and people are fictional.
 
@@ -166,27 +167,24 @@ Full list of measures: [`docs/dax-measures.md`](docs/dax-measures.md)
 ## 📸 Screenshots
 
 ### Requests List
-![Requests list](docs/screenshots/01_requests_list.png)
+![Requests list](docs/New Request screen.png)
 
 ### Request Form (auto-generated ID, default status)
-![Request form](docs/screenshots/02_request_form.png)
+![Request form](docs/Create new request.png)
 
 ### Planner View (stage-based buttons and days-late indicators)
-![Planner view](docs/screenshots/03_planner_view.png)
+![Planner view](docs/Planner view.png)
 
 ### Power Automate Flows
-![Cloud flows](docs/screenshots/04_cloud_flows.png)
+![Cloud flows](docs/Automate flows.png)
 
 ### Automated Email – New Request Alert
-![New request email](docs/screenshots/05_new_request_email.png)
+![New request email](docs/New sample request mail.png)
 
 ### Automated Email – Daily Overdue Summary
 ![Daily overdue email](docs/screenshots/06_daily_overdue_email.png)
 
-### Power BI Dashboard
-👉 [Open the live dashboard](PASTE-YOUR-PUBLISHED-LINK-HERE)
 
----
 
 ## 📁 Repository Structure
 
@@ -240,20 +238,4 @@ sample-request-tracker/
 | **Power BI** | Power Query (M), star-schema modelling, active/inactive relationships, DAX (time intelligence, `CALCULATE`, `USERELATIONSHIP`, `REMOVEFILTERS`), drill-through, tooltips, conditional formatting |
 | **Business analysis** | Process mapping of the sample workflow, KPI definition (on-time %, lead time, rework rate, capacity utilisation) |
 
----
 
-## 🔭 Future Improvements
-
-- Use a Dataverse **Autonumber** column for Request IDs to remove any risk of duplicates with concurrent users
-- Add **role-based security** (merchandiser vs planner views)
-- Calculate **time spent in each stage** from Status History to find bottlenecks
-- Embed the Power BI report inside the Power App
-- Add Teams notifications alongside email
-
----
-
-## 👤 Author
-
-**Gihini Waidyalankara**
-Final-year BSc (Hons) Business Analytics, University of Moratuwa
-[LinkedIn](PASTE-YOUR-LINKEDIN) · [GitHub](https://github.com/PASTE-YOUR-USERNAME)
