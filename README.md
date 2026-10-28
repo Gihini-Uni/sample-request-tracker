@@ -2,7 +2,7 @@
 
 An end-to-end system for tracking garment **sample requests** — from the moment a merchandiser raises a request to sample completion — built with **Power Apps, Dataverse, Power Automate and Power BI**.
 
-🔗 **Live dashboard:** [View the Power BI report]((https://app.powerbi.com/view?r=eyJrIjoiYTAzNzNhNzgtZTgxOS00MDU2LTllZjYtYTc2ZDZlMzU3M2MwIiwidCI6ImFhYzBjNTY0LTZjNWUtNGIwNS04ZGMzLTQwODA4N2Y3N2Y3NiIsImMiOjEwfQ%3D%3D))
+🔗 **Live dashboard:** [View the Power BI report] (https://app.powerbi.com/view?r=eyJrIjoiYTAzNzNhNzgtZTgxOS00MDU2LTllZjYtYTc2ZDZlMzU3M2MwIiwidCI6ImFhYzBjNTY0LTZjNWUtNGIwNS04ZGMzLTQwODA4N2Y3N2Y3NiIsImMiOjEwfQ%3D%3D
 
 🔗 **View PowerApp:** [View the PowerApp created] (https://apps.powerapps.com/play/e/1cbe9ceb-8ab7-e05f-ae12-e060353a589d/a/013ba833-20b5-455d-99ad-5203ddff1355?tenantId=aac0c564-6c5e-4b05-8dc3-408087f77f76&hint=b6155a0d-eed6-4b60-a056-b4c171a7845f&source=sharebutton&sourcetime=1791149091777#)
 
